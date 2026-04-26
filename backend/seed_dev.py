@@ -90,14 +90,21 @@ def main() -> None:
         nom_utilisateur=os.getenv("SEED_USER_USERNAME", "alice"),
         email=os.getenv("SEED_USER_EMAIL", "alice@example.test"),
         role="UTILISATEUR",
-        password_clear=os.getenv("SEED_USER_PASSWORD", "secret"),
+        password_clear=os.getenv("SEED_USER_PASSWORD", "salut"),
     )
     _upsert_user(
         organisation_id=organisation_id,
         nom_utilisateur=os.getenv("SEED_ADMIN_USERNAME", "admin"),
         email=os.getenv("SEED_ADMIN_EMAIL", "admin@example.test"),
         role="ADMIN",
-        password_clear=os.getenv("SEED_ADMIN_PASSWORD", "admin-secret"),
+        password_clear=os.getenv("SEED_ADMIN_PASSWORD", "salut"),
+    )
+    _upsert_user(
+        organisation_id=organisation_id,
+        nom_utilisateur=os.getenv("SEED_SUPERADMIN_USERNAME", "superadmin"),
+        email=os.getenv("SEED_SUPERADMIN_EMAIL", "superadmin@example.test"),
+        role="SUPER_ADMIN",
+        password_clear=os.getenv("SEED_SUPERADMIN_PASSWORD", "salut"),
     )
 
     print("[seed] done.")
