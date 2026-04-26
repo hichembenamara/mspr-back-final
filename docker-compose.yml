@@ -55,9 +55,11 @@ services:
       JWT_SECRET_KEY: ${JWT_SECRET_KEY:-change-me-local-dev}
       ENVIRONMENT: ${ENVIRONMENT:-development}
       SEED_USER_USERNAME: alice
-      SEED_USER_PASSWORD: secret
+      SEED_USER_PASSWORD: salut
       SEED_ADMIN_USERNAME: admin
-      SEED_ADMIN_PASSWORD: admin-secret
+      SEED_ADMIN_PASSWORD: salut
+      SEED_SUPERADMIN_USERNAME: superadmin
+      SEED_SUPERADMIN_PASSWORD: salut
       SEED_DB_WAIT_SECONDS: 90
     command: ["python", "seed_dev.py"]
     depends_on:
@@ -72,7 +74,7 @@ services:
     restart: unless-stopped
     environment:
       NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000/api}
-      INTERNAL_API_URL: http://backend:8000/api
+      BACKEND_BASE_URL: http://backend:8000
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
     depends_on:
