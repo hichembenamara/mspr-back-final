@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from fastapi import FastAPI, Request
+from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import IntegrityError
@@ -33,7 +34,11 @@ def register_error_handlers(app: FastAPI) -> None:
     async def validation_error_handler(_: Request, exc: RequestValidationError) -> JSONResponse:
         return JSONResponse(
             status_code=422,
-            content=error_payload("validation_error", "La requete est invalide.", exc.errors()),
+            content=error_payload(
+                "validation_error",
+                "La requete est invalide.",
+                jsonable_encoder(exc.errors()),
+            ),
         )
 
     @app.exception_handler(StarletteHTTPException)

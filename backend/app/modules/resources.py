@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from dataclasses import dataclass
 from datetime import date, datetime
 from typing import Any
@@ -79,7 +77,7 @@ class JournalAlimentaireCreate(BaseModel):
     eau_ml: float | None = None
 
     @model_validator(mode="after")
-    def validate_reference(self) -> JournalAlimentaireCreate:
+    def validate_reference(self) -> "JournalAlimentaireCreate":
         if (self.plat_id is None) == (self.aliment_id is None):
             raise ValueError("Une ligne doit referencer soit un plat, soit un aliment.")
         return self
@@ -100,7 +98,7 @@ class JournalAlimentaireUpdate(BaseModel):
     eau_ml: float | None = None
 
     @model_validator(mode="after")
-    def validate_reference(self) -> JournalAlimentaireUpdate:
+    def validate_reference(self) -> "JournalAlimentaireUpdate":
         if self.plat_id is not None and self.aliment_id is not None:
             raise ValueError("Une ligne doit referencer soit un plat, soit un aliment.")
         return self
@@ -120,7 +118,7 @@ class SeanceCompleteCreate(BaseModel):
     exercices: list[dict[str, Any]] = Field(default_factory=list)
 
     @model_validator(mode="after")
-    def validate_details(self) -> SeanceCompleteCreate:
+    def validate_details(self) -> "SeanceCompleteCreate":
         if "exercices" in self.model_fields_set and not self.exercices:
             raise ValueError("Une seance creee avec detail complet doit contenir au moins un exercice.")
         return self

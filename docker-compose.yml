@@ -40,6 +40,30 @@ services:
       db:
         condition: service_healthy
 
+  seed:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: healthai-seed
+    restart: "no"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: ${DB_USER:-healthai}
+      DB_PASSWORD: ${DB_PASSWORD:-healthai}
+      DB_NAME: ${DB_NAME:-healthai_coaching}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-change-me-local-dev}
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      SEED_USER_USERNAME: alice
+      SEED_USER_PASSWORD: secret
+      SEED_ADMIN_USERNAME: admin
+      SEED_ADMIN_PASSWORD: admin-secret
+      SEED_DB_WAIT_SECONDS: 90
+    command: ["python", "seed_dev.py"]
+    depends_on:
+      db:
+        condition: service_healthy
+
   frontend:
     build:
       context: ./frontend
