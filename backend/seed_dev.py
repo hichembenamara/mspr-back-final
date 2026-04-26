@@ -47,6 +47,7 @@ def _upsert_user(
                 organisation_id=organisation_id,
                 nom_utilisateur=nom_utilisateur,
                 email=email,
+                genre="Inconnu",
                 role=role,
                 statut="ACTIF",
                 mot_de_passe_hash=hash_password_pbkdf2_sha256(password_clear),
