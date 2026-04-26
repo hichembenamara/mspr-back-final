@@ -173,7 +173,8 @@ def create_crud_router(config: ResourceConfig) -> APIRouter:
         _: Utilisateur = Depends(require_roles(*CRUD_ROLES)),
     ) -> dict[str, Any]:
         data = payload.model_dump(exclude_unset=True)
-        data.setdefault("cree_le", datetime.utcnow())
+        if "cree_le" in config.model.__table__.columns:
+            data.setdefault("cree_le", datetime.utcnow())
         item = config.model(**data)
         try:
             db.add(item)
